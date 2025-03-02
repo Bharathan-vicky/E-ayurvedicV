@@ -1,5 +1,4 @@
-
-import { MapPin, Video, Pill, Watch, Heart, Yoga } from "lucide-react";
+import { MapPin, Video, Pill, Watch, Heart, ActivitySquare } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,7 @@ const Services = () => {
           toast({
             title: "Location Access Granted",
             description: "We can now show herbs available in your area.",
-            variant: "success",
+            variant: "default",
           });
         },
         (error) => {
@@ -72,7 +71,7 @@ const Services = () => {
       id: "yoga-meditation",
       title: "Yoga & Meditation",
       description: "Access guided sessions for yoga asanas and meditation techniques that complement your Ayurvedic lifestyle.",
-      icon: <Yoga className="text-ayurvedic-forest" size={24} />,
+      icon: <ActivitySquare className="text-ayurvedic-forest" size={24} />,
       imageSrc: "https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80",
     },
     {
@@ -103,7 +102,6 @@ const Services = () => {
   return (
     <PageTransition>
       <div className="min-h-screen">
-        {/* Hero Section */}
         <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/50 to-background"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,7 +116,6 @@ const Services = () => {
           </div>
         </section>
 
-        {/* Services Section */}
         <section className="py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -163,7 +160,6 @@ const Services = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="py-20 bg-muted">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-r from-ayurvedic-forest/90 to-ayurvedic-earth/90 rounded-3xl p-8 md:p-12 shadow-xl relative overflow-hidden">
@@ -178,7 +174,7 @@ const Services = () => {
                     Book Virtual Consultation
                   </Button>
                   <Button variant="outline" className="rounded-full border-white text-white hover:bg-white/10">
-                    <Yoga className="mr-2 h-4 w-4" />
+                    <ActivitySquare className="mr-2 h-4 w-4" />
                     Try Yoga Session
                   </Button>
                 </div>
