@@ -1,5 +1,5 @@
 
-import { MapPin, Video, Pill, Watch, Heart, ActivitySquare, FileText, FolderOpen, Lock } from "lucide-react";
+import { MapPin, Video, Pill, Heart, ActivitySquare, FileText, FolderOpen, Lock, Upload, Play } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { Button } from "@/components/ui/button";
@@ -18,13 +18,21 @@ interface ServiceFeature {
     description: string;
     features: string[];
   }[];
+  sessions?: {
+    title: string;
+    duration: string;
+    level: string;
+    videoUrl: string;
+  }[];
 }
 
 const Services = () => {
   const { toast } = useToast();
   const [locationGranted, setLocationGranted] = useState<boolean | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  
   const requestLocation = () => {
     if (navigator.geolocation) {
       toast({
@@ -62,6 +70,41 @@ const Services = () => {
   const handleServiceClick = (serviceId: string) => {
     setSelectedService(serviceId === selectedService ? null : serviceId);
   };
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+      setUploadStatus('idle');
+    }
+  };
+  
+  const handleFileUpload = () => {
+    if (!selectedFile) {
+      toast({
+        title: "No file selected",
+        description: "Please select a file to upload",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setUploadStatus('uploading');
+    
+    // Simulate backend upload with timeout
+    setTimeout(() => {
+      setUploadStatus('success');
+      toast({
+        title: "Document Uploaded",
+        description: `${selectedFile.name} has been successfully uploaded`,
+        variant: "default",
+      });
+      setSelectedFile(null);
+      
+      // Reset file input
+      const fileInput = document.getElementById('document-upload') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+    }, 2000);
+  };
 
   const services: ServiceFeature[] = [
     {
@@ -84,14 +127,26 @@ const Services = () => {
       description: "Access guided sessions for yoga asanas and meditation techniques that complement your Ayurvedic lifestyle.",
       icon: <ActivitySquare className="text-ayurvedic-forest" size={24} />,
       imageSrc: "https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80",
-    },
-    {
-      id: "smartwatch",
-      title: "Smartwatch Integration",
-      description: "Track your doshas, daily routines, and wellness metrics with our smartwatch companion app.",
-      icon: <Watch className="text-ayurvedic-forest" size={24} />,
-      imageSrc: "https://images.unsplash.com/photo-1617043786394-f977fa12eddf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      comingSoon: true,
+      sessions: [
+        {
+          title: "Morning Energy Flow",
+          duration: "20 minutes",
+          level: "Beginner",
+          videoUrl: "https://youtu.be/watch?v=kFhGajlzCCo"
+        },
+        {
+          title: "Stress Relief Meditation",
+          duration: "15 minutes",
+          level: "All Levels",
+          videoUrl: "https://youtu.be/watch?v=ez3GgRqhNvA"
+        },
+        {
+          title: "Vata Balancing Sequence",
+          duration: "30 minutes", 
+          level: "Intermediate",
+          videoUrl: "https://youtu.be/watch?v=LI0fAuaOgJU"
+        }
+      ]
     },
     {
       id: "e-health",
@@ -170,7 +225,7 @@ const Services = () => {
                     imageSrc={service.imageSrc}
                     delay={index * 100}
                     className={`${service.comingSoon ? "opacity-80" : ""} ${selectedService === service.id ? "ring-2 ring-ayurvedic-forest" : ""}`}
-                    onClick={() => service.details && handleServiceClick(service.id)}
+                    onClick={() => service.details || service.sessions ? handleServiceClick(service.id) : undefined}
                   />
                   {service.comingSoon && (
                     <div className="absolute top-4 right-4 bg-primary text-white py-1 px-3 rounded-full text-xs font-medium">
@@ -200,6 +255,19 @@ const Services = () => {
                       >
                         <FolderOpen className="mr-2 h-4 w-4" />
                         View Documents
+                      </Button>
+                    </div>
+                  )}
+                  {service.id === "yoga-meditation" && (
+                    <div className="absolute bottom-4 right-4">
+                      <Button 
+                        variant="secondary" 
+                        size="sm" 
+                        onClick={() => handleServiceClick(service.id)}
+                        className="bg-white hover:bg-gray-100"
+                      >
+                        <Play className="mr-2 h-4 w-4" />
+                        View Sessions
                       </Button>
                     </div>
                   )}
@@ -234,14 +302,44 @@ const Services = () => {
                   ))}
                 </div>
                 
+                <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                  <h4 className="text-xl font-semibold text-ayurvedic-forest mb-4">Upload Health Document</h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <input
+                        id="document-upload"
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                      />
+                      <label 
+                        htmlFor="document-upload" 
+                        className="flex items-center justify-center w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      >
+                        <Upload className="mr-2 text-ayurvedic-forest" />
+                        <span>{selectedFile ? selectedFile.name : "Choose a file or drag & drop here"}</span>
+                      </label>
+                    </div>
+                    
+                    {selectedFile && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500">
+                          {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                        </span>
+                        <Button
+                          onClick={handleFileUpload}
+                          disabled={uploadStatus === 'uploading'}
+                          className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
+                        >
+                          {uploadStatus === 'uploading' ? 'Uploading...' : 'Upload Document'}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Button 
-                    variant="default" 
-                    className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90 text-white"
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    Upload Document
-                  </Button>
                   <Button 
                     variant="outline" 
                     className="border-ayurvedic-earth text-ayurvedic-earth hover:bg-ayurvedic-earth/10"
@@ -249,6 +347,57 @@ const Services = () => {
                     <FolderOpen className="mr-2 h-4 w-4" />
                     Browse Documents
                   </Button>
+                </div>
+              </div>
+            )}
+            
+            {/* Yoga & Meditation Sessions Section */}
+            {selectedService === "yoga-meditation" && (
+              <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-ayurvedic-forest">Yoga & Meditation Sessions</h3>
+                  <ActivitySquare className="text-ayurvedic-forest" size={24} />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {services.find(s => s.id === "yoga-meditation")?.sessions?.map((session, index) => (
+                    <div key={index} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <div className="aspect-video bg-gray-100 relative group">
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button 
+                            variant="default" 
+                            className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
+                            onClick={() => {
+                              toast({
+                                title: "Starting session",
+                                description: `Loading ${session.title}`,
+                                variant: "default",
+                              });
+                            }}
+                          >
+                            <Play className="mr-2 h-4 w-4" />
+                            Play Session
+                          </Button>
+                        </div>
+                        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                          {session.duration}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h4 className="font-medium text-lg">{session.title}</h4>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-sm text-gray-600">Level: {session.level}</span>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="text-ayurvedic-forest hover:text-ayurvedic-forest/90 hover:bg-ayurvedic-forest/10"
+                          >
+                            <Heart className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
