@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Leaf, Utensils, Heart, Tablet } from "lucide-react";
+import { Leaf, Utensils, Heart, Tablet, Sparkles } from "lucide-react";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +35,13 @@ const Index = () => {
       icon: <Heart size={24} className="text-ayurvedic-forest" />,
       imageSrc: "https://images.unsplash.com/photo-1554130666-d400f75197ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       path: "/solutions"
+    },
+    {
+      title: "Digital Services",
+      description: "Access modern e-health services integrated with Ayurvedic wisdom.",
+      icon: <Sparkles size={24} className="text-ayurvedic-forest" />,
+      imageSrc: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      path: "/services"
     }
   ];
 
@@ -70,7 +76,7 @@ const Index = () => {
                 Ancient Wisdom for Modern Wellness
               </h1>
               <p className="mt-6 paragraph text-xl animate-fade-up" style={{ animationDelay: "200ms" }}>
-                Discover the transformative power of Ayurveda, the ancient science of life, adapted for today's health needs. Explore natural remedies, plant properties, diet principles, and holistic approaches to common ailments.
+                Discover the transformative power of Ayurveda, the ancient science of life, adapted for today's health needs. Explore natural remedies, plant properties, diet principles, holistic approaches, and modern digital services.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up" style={{ animationDelay: "400ms" }}>
                 <Link
@@ -80,10 +86,10 @@ const Index = () => {
                   Explore Remedies
                 </Link>
                 <Link
-                  to="/diet"
+                  to="/services"
                   className="rounded-full bg-white border border-input px-8 py-3 text-base font-medium text-foreground shadow-sm transition-all hover:bg-muted"
                 >
-                  Diet Principles
+                  Digital Services
                 </Link>
               </div>
             </div>
@@ -100,7 +106,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
               {features.map((feature, index) => (
                 <AnimatedCard
                   key={feature.title}
