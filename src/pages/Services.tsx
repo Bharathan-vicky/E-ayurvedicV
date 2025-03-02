@@ -1,4 +1,5 @@
-import { MapPin, Video, Pill, Watch, Heart, ActivitySquare } from "lucide-react";
+
+import { MapPin, Video, Pill, Watch, Heart, ActivitySquare, FileText, FolderOpen, Lock } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,17 @@ interface ServiceFeature {
   icon: React.ReactNode;
   imageSrc: string;
   comingSoon?: boolean;
+  details?: {
+    title: string;
+    description: string;
+    features: string[];
+  }[];
 }
 
 const Services = () => {
   const { toast } = useToast();
   const [locationGranted, setLocationGranted] = useState<boolean | null>(null);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const requestLocation = () => {
     if (navigator.geolocation) {
@@ -52,6 +59,10 @@ const Services = () => {
     }
   };
 
+  const handleServiceClick = (serviceId: string) => {
+    setSelectedService(serviceId === selectedService ? null : serviceId);
+  };
+
   const services: ServiceFeature[] = [
     {
       id: "virtual-clinic",
@@ -84,11 +95,35 @@ const Services = () => {
     },
     {
       id: "e-health",
-      title: "E-Health Services",
-      description: "Store and manage your Ayurvedic health records securely for better treatment continuity.",
-      icon: <Heart className="text-ayurvedic-forest" size={24} />,
-      imageSrc: "https://images.unsplash.com/photo-1576671103104-7b8b0cb8d759?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
-      comingSoon: true,
+      title: "E-Health Document Storage",
+      description: "Store, manage, and securely access your Ayurvedic health records and documents for better treatment continuity.",
+      icon: <FileText className="text-ayurvedic-forest" size={24} />,
+      imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80",
+      details: [
+        {
+          title: "Secure Document Storage",
+          description: "Our E-Health Document Storage system provides a secure and organized way to manage all your health-related documents in one place.",
+          features: [
+            "End-to-end encryption for all your sensitive health documents",
+            "Store consultation notes, prescriptions, and test results",
+            "Organize documents by categories and dates",
+            "Easily share documents with your healthcare providers",
+            "Access your documents anytime, anywhere"
+          ]
+        },
+        {
+          title: "Document Types",
+          description: "Our system supports various health document formats essential for your Ayurvedic wellness journey.",
+          features: [
+            "Consultation records and practitioner notes",
+            "Ayurvedic prescriptions and treatment plans",
+            "Lab test results and reports",
+            "Dietary guidelines and personalized regimens",
+            "Progress tracking documents",
+            "Medical history files and records"
+          ]
+        }
+      ]
     },
     {
       id: "geo-herbs",
@@ -134,7 +169,8 @@ const Services = () => {
                     icon={service.icon}
                     imageSrc={service.imageSrc}
                     delay={index * 100}
-                    className={service.comingSoon ? "opacity-80" : ""}
+                    className={`${service.comingSoon ? "opacity-80" : ""} ${selectedService === service.id ? "ring-2 ring-ayurvedic-forest" : ""}`}
+                    onClick={() => service.details && handleServiceClick(service.id)}
                   />
                   {service.comingSoon && (
                     <div className="absolute top-4 right-4 bg-primary text-white py-1 px-3 rounded-full text-xs font-medium">
@@ -154,9 +190,68 @@ const Services = () => {
                       </Button>
                     </div>
                   )}
+                  {service.id === "e-health" && (
+                    <div className="absolute bottom-4 right-4">
+                      <Button 
+                        variant="secondary" 
+                        size="sm" 
+                        onClick={() => handleServiceClick(service.id)}
+                        className="bg-white hover:bg-gray-100"
+                      >
+                        <FolderOpen className="mr-2 h-4 w-4" />
+                        View Documents
+                      </Button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* Document Storage Details Section */}
+            {selectedService === "e-health" && (
+              <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-ayurvedic-forest">E-Health Document Storage System</h3>
+                  <Lock className="text-ayurvedic-forest" size={24} />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {services.find(s => s.id === "e-health")?.details?.map((detail, index) => (
+                    <div key={index} className="space-y-4">
+                      <h4 className="text-xl font-semibold text-ayurvedic-earth">{detail.title}</h4>
+                      <p className="text-gray-700">{detail.description}</p>
+                      <ul className="space-y-2">
+                        {detail.features.map((feature, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 mr-2 bg-ayurvedic-forest/20 rounded-full text-ayurvedic-forest">
+                              ✓
+                            </span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Button 
+                    variant="default" 
+                    className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90 text-white"
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    Upload Document
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="border-ayurvedic-earth text-ayurvedic-earth hover:bg-ayurvedic-earth/10"
+                  >
+                    <FolderOpen className="mr-2 h-4 w-4" />
+                    Browse Documents
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
