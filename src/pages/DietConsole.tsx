@@ -1,3 +1,4 @@
+
 import PageTransition from "@/components/ui-custom/PageTransition";
 import { useState } from "react";
 import { Utensils, ArrowRight, Check, Info, PieChart, BarChart, Activity, CalendarDays, Heart, Brain, Wind, Droplets } from "lucide-react";
@@ -517,3 +518,175 @@ const DietConsole = () => {
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis dataKey="name" />
                               <YAxis />
+                              <Tooltip />
+                              <Bar dataKey="calories" fill="#8884d8" />
+                            </RechartsBarChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="progress">
+                    <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+                      <h3 className="font-medium text-lg mb-4 flex items-center">
+                        <Activity className="h-5 w-5 mr-2 text-primary" />
+                        Weekly Dosha Balance Progress
+                      </h3>
+                      <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <RechartsBarChart
+                            data={dietRecommendations[selectedDosha as keyof typeof dietRecommendations].weeklyProgress}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="day" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="balance" fill="#8884d8" />
+                          </RechartsBarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="meal-planner">
+                    <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+                      <h3 className="font-medium text-lg mb-4 flex items-center">
+                        <CalendarDays className="h-5 w-5 mr-2 text-primary" />
+                        Meal Planning Guidelines
+                      </h3>
+                      <p className="mb-4">Plan your meals according to the following guidelines to optimize your {selectedDosha} balance:</p>
+                      <ul className="space-y-2 mb-6">
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-primary mr-2 mt-1 flex-shrink-0" />
+                          <span>Eat your largest meal at midday when digestion is strongest</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-primary mr-2 mt-1 flex-shrink-0" />
+                          <span>Include all six tastes in each meal (sweet, sour, salty, pungent, bitter, astringent)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-primary mr-2 mt-1 flex-shrink-0" />
+                          <span>Wait until your previous meal is digested before eating again (3-6 hours)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-primary mr-2 mt-1 flex-shrink-0" />
+                          <span>Eat in a calm environment with minimal distractions</span>
+                        </li>
+                      </ul>
+                      <Button className="w-full">Generate Custom Meal Plan</Button>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+          </section>
+        )}
+        
+        {/* Health Condition Diet Recommendations */}
+        <section className="py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="heading-md text-center mb-2 animate-fade-up">
+                Plant-Based Diet Recommendations
+              </h2>
+              <p className="text-center text-muted-foreground mb-8 animate-fade-up" style={{ animationDelay: "100ms" }}>
+                Explore targeted plant-based diet interventions for specific health conditions
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {healthConditions.map((condition, index) => (
+                  <button
+                    key={condition.id}
+                    className={`group p-6 rounded-xl border transition-all duration-300 animate-fade-up h-full text-left ${
+                      selectedHealthCondition === condition.id 
+                        ? "border-primary bg-primary/5 shadow-md" 
+                        : "border-border bg-card hover:border-primary/50 hover:shadow-sm"
+                    }`}
+                    onClick={() => setSelectedHealthCondition(condition.id)}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg">
+                      <img 
+                        src={condition.imageSrc} 
+                        alt={condition.name} 
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {selectedHealthCondition === condition.id && (
+                        <div className="absolute top-2 right-2 rounded-full bg-primary p-1">
+                          <Check className="h-4 w-4 text-white" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      {condition.icon}
+                      <h3 className="text-lg font-medium">{condition.name}</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{condition.description}</p>
+                  </button>
+                ))}
+              </div>
+              
+              {selectedHealthCondition && (
+                <div className="bg-card border border-border rounded-xl p-6 shadow-sm animate-fade-up">
+                  {healthConditions.filter(c => c.id === selectedHealthCondition).map(condition => (
+                    <div key={condition.id}>
+                      <div className="flex items-center gap-2 mb-4">
+                        {condition.icon}
+                        <h3 className="text-xl font-medium">{condition.name} Recommendations</h3>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                          <p className="mb-4">{condition.description}</p>
+                          <ul className="space-y-3">
+                            {condition.recommendations.map(rec => (
+                              <li key={rec.name} className="flex items-start">
+                                <div className="h-5 w-5 mt-0.5 mr-3 rounded-full" style={{ backgroundColor: rec.color }}></div>
+                                <div>
+                                  <span className="font-medium">{rec.name}: </span>
+                                  <span className="text-muted-foreground">{rec.benefits}</span>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        
+                        <div className="h-80">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <RechartsPieChart>
+                              <Pie
+                                data={condition.recommendations}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                outerRadius={80}
+                                fill="#8884d8"
+                                dataKey="name"
+                                nameKey="name"
+                                label={({ name }) => name}
+                              >
+                                {condition.recommendations.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                              </Pie>
+                              <Tooltip formatter={(value, name) => [name, '']} />
+                              <Legend />
+                            </RechartsPieChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    </PageTransition>
+  );
+};
+
+export default DietConsole;
