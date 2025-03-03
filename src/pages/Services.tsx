@@ -1,3 +1,4 @@
+
 import { MapPin, Video, Pill, Heart, ActivitySquare, FileText, FolderOpen, Lock, Upload, Play, ShoppingCart, Package, Search } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
@@ -675,4 +676,17 @@ const Services = () => {
                     Book Virtual Consultation
                   </Button>
                   <Button variant="outline" className="rounded-full border-white text-white hover:bg-white/10">
-                    <ActivitySquare className="
+                    <ActivitySquare className="mr-2 h-4 w-4" />
+                    Join Yoga Session
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </PageTransition>
+  );
+};
+
+export default Services;
