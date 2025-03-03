@@ -3,7 +3,7 @@ import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ServiceFeature {
   id: string;
@@ -42,7 +42,16 @@ const Services = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [cart, setCart] = useState<Array<{id: string, name: string, price: number, quantity: number}>>([]);
+  const [currentLocation, setCurrentLocation] = useState<string>("Chennai");
   
+  useEffect(() => {
+    toast({
+      title: "Location Set",
+      description: "Default location set to Chennai, India. You can update your location anytime.",
+      variant: "default",
+    });
+  }, [toast]);
+
   const requestLocation = () => {
     if (navigator.geolocation) {
       toast({
@@ -53,6 +62,7 @@ const Services = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocationGranted(true);
+          setCurrentLocation("Your Current Location");
           toast({
             title: "Location Access Granted",
             description: "We can now show herbs available in your area.",
@@ -62,19 +72,27 @@ const Services = () => {
         (error) => {
           setLocationGranted(false);
           toast({
-            title: "Location Access Denied",
-            description: "We need location access to show herbs near you.",
-            variant: "destructive",
+            title: "Using Default Location",
+            description: "Using Chennai as your location. You can try again later.",
+            variant: "default",
           });
         }
       );
     } else {
       toast({
         title: "Geolocation Not Supported",
-        description: "Your browser doesn't support geolocation.",
-        variant: "destructive",
+        description: "Using Chennai as your default location.",
+        variant: "default",
       });
     }
+  };
+
+  const openPlantNetWebsite = () => {
+    window.open("https://identify.plantnet.org/", "_blank", "noopener,noreferrer");
+  };
+
+  const openPatanjaliWebsite = () => {
+    window.open("https://www.patanjaliayurved.net/", "_blank", "noopener,noreferrer");
   };
 
   const handleServiceClick = (serviceId: string) => {
@@ -153,10 +171,6 @@ const Services = () => {
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
-
-  const openPatanjaliWebsite = () => {
-    window.open("https://www.patanjaliayurved.net/", "_blank", "noopener,noreferrer");
   };
 
   const services: ServiceFeature[] = [
@@ -286,7 +300,7 @@ const Services = () => {
     {
       id: "geo-herbs",
       title: "Geolocation Herb Finder",
-      description: "Discover medicinal herbs and plants available in your locality with our interactive map.",
+      description: "Discover and identify medicinal herbs and plants available in your locality with our PlantNet integration.",
       icon: <MapPin className="text-ayurvedic-forest" size={24} />,
       imageSrc: "https://images.unsplash.com/photo-1598517511230-8fce6d170f1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
     },
@@ -336,16 +350,31 @@ const Services = () => {
                     </div>
                   )}
                   {service.id === "geo-herbs" && (
-                    <div className="absolute bottom-4 right-4">
-                      <Button 
-                        variant="secondary" 
-                        size="sm" 
-                        onClick={requestLocation}
-                        className="bg-white hover:bg-gray-100"
-                      >
-                        <MapPin className="mr-2 h-4 w-4" />
-                        Find Herbs Near Me
-                      </Button>
+                    <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+                      <div className="bg-white/90 px-3 py-1 rounded-full text-sm font-medium text-ayurvedic-forest flex items-center">
+                        <MapPin className="mr-1 h-3 w-3" />
+                        {currentLocation}
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          onClick={requestLocation}
+                          className="bg-white hover:bg-gray-100"
+                        >
+                          <MapPin className="mr-2 h-4 w-4" />
+                          Update Location
+                        </Button>
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          onClick={openPlantNetWebsite}
+                          className="bg-white hover:bg-gray-100"
+                        >
+                          <Search className="mr-2 h-4 w-4" />
+                          Identify Plants
+                        </Button>
+                      </div>
                     </div>
                   )}
                   {service.id === "e-health" && (
