@@ -1,7 +1,6 @@
-
 import PageTransition from "@/components/ui-custom/PageTransition";
 import { useState } from "react";
-import { Utensils, ArrowRight, Check, Info, PieChart, BarChart, Activity, CalendarDays } from "lucide-react";
+import { Utensils, ArrowRight, Check, Info, PieChart, BarChart, Activity, CalendarDays, Heart, Brain, Lungs, Droplets } from "lucide-react";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { 
   BarChart as RechartsBarChart, 
@@ -22,6 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const DietConsole = () => {
   const [selectedDosha, setSelectedDosha] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("recommendations");
+  const [selectedHealthCondition, setSelectedHealthCondition] = useState<string | null>(null);
 
   const doshas = [
     {
@@ -62,7 +62,7 @@ const DietConsole = () => {
         {
           title: "Spiced Milk",
           description: "Warm milk with cardamom, nutmeg, and a touch of honey before bed.",
-          imageSrc: "https://images.unsplash.com/photo-1564451932168-a0a52067679b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          imageSrc: "https://images.unsplash.com/photo-1564451932168-a0a52067679b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         }
       ],
       nutrients: [
@@ -111,7 +111,7 @@ const DietConsole = () => {
         {
           title: "Cooling Almond Milk",
           description: "Fresh almond milk with rose water and a touch of maple syrup.",
-          imageSrc: "https://images.unsplash.com/photo-1628201871729-fd3f3070ca2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          imageSrc: "https://images.unsplash.com/photo-1628201871729-fd3f3070ca2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         }
       ],
       nutrients: [
@@ -160,7 +160,7 @@ const DietConsole = () => {
         {
           title: "Ginger Tea",
           description: "Strong ginger tea with a touch of honey and lemon.",
-          imageSrc: "https://images.unsplash.com/photo-1608632740784-45943752bf97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          imageSrc: "https://images.unsplash.com/photo-1608632740784-45943752bf97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         }
       ],
       nutrients: [
@@ -193,6 +193,94 @@ const DietConsole = () => {
       ]
     }
   };
+
+  // Health Condition Diet Visualizations
+  const healthConditions = [
+    {
+      id: "obesity",
+      name: "Weight Management",
+      icon: <Activity size={24} className="text-amber-500" />,
+      description: "Plant-based foods that help with weight management and metabolism",
+      imageSrc: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Leafy Greens", benefits: "High in fiber, low in calories", color: "#2D9E2D" },
+        { name: "Legumes", benefits: "Protein-rich and filling", color: "#B3842D" },
+        { name: "Berries", benefits: "Low glycemic load, rich in antioxidants", color: "#8B2D5E" },
+        { name: "Whole Grains", benefits: "Slow-releasing energy, promotes satiety", color: "#CD853F" },
+        { name: "Nuts & Seeds", benefits: "Healthy fats, protein, and fiber", color: "#CC9966" }
+      ]
+    },
+    {
+      id: "diabetes",
+      name: "Blood Sugar Control",
+      icon: <Droplets size={24} className="text-blue-500" />,
+      description: "Plant-based foods that help regulate blood sugar levels",
+      imageSrc: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Cinnamon", benefits: "May help reduce blood sugar", color: "#8B4513" },
+        { name: "Bitter Gourd", benefits: "Contains insulin-like compounds", color: "#5AAD45" },
+        { name: "Fenugreek", benefits: "May improve insulin sensitivity", color: "#FFD700" },
+        { name: "Amla", benefits: "Rich in chromium that regulates carbohydrate metabolism", color: "#7CB36A" },
+        { name: "Jamun", benefits: "Contains jamboline which slows conversion of starch to sugar", color: "#4B244B" }
+      ]
+    },
+    {
+      id: "hypertension",
+      name: "Blood Pressure Management",
+      icon: <Heart size={24} className="text-red-500" />,
+      description: "Plant-based foods that support healthy blood pressure",
+      imageSrc: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Beetroot", benefits: "Contains nitrates that help reduce blood pressure", color: "#8E2657" },
+        { name: "Garlic", benefits: "Contains allicin which improves blood flow", color: "#F7F7E3" },
+        { name: "Flaxseeds", benefits: "Rich in omega-3 fatty acids", color: "#BFA46F" },
+        { name: "Pomegranate", benefits: "Rich in potassium and polyphenols", color: "#C41E3A" },
+        { name: "Celery", benefits: "Contains compounds that may relax blood vessels", color: "#7AC142" }
+      ]
+    },
+    {
+      id: "cardiac",
+      name: "Heart Health",
+      icon: <Heart size={24} className="text-red-500" />,
+      description: "Plant-based foods that support cardiovascular health",
+      imageSrc: "https://images.unsplash.com/photo-1519996529931-28324d10a4dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Walnuts", benefits: "Rich in omega-3 fatty acids", color: "#B39A7D" },
+        { name: "Oats", benefits: "Contains beta-glucan that lowers cholesterol", color: "#E0D2B3" },
+        { name: "Berries", benefits: "Rich in anthocyanins", color: "#9370DB" },
+        { name: "Spinach", benefits: "High in nitrates and antioxidants", color: "#006400" },
+        { name: "Avocado", benefits: "Contains monounsaturated fats", color: "#568203" }
+      ]
+    },
+    {
+      id: "cognitive",
+      name: "Brain Health",
+      icon: <Brain size={24} className="text-purple-500" />,
+      description: "Plant-based foods that support cognitive function",
+      imageSrc: "https://images.unsplash.com/photo-1564834401745-fe7adbe84f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Turmeric", benefits: "Contains curcumin that may cross blood-brain barrier", color: "#FFA500" },
+        { name: "Broccoli", benefits: "Rich in compounds that support brain health", color: "#1D6B1D" },
+        { name: "Pumpkin Seeds", benefits: "High in magnesium and zinc", color: "#DDAA44" },
+        { name: "Blueberries", benefits: "Contains flavonoids that improve memory", color: "#4682B4" },
+        { name: "Dark Chocolate", benefits: "Rich in flavonols that boost brain function", color: "#3B2314" }
+      ]
+    },
+    {
+      id: "respiratory",
+      name: "Respiratory Health",
+      icon: <Lungs size={24} className="text-blue-500" />,
+      description: "Plant-based foods that support lung health",
+      imageSrc: "https://images.unsplash.com/photo-1600423115676-a232d97f5fe2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      recommendations: [
+        { name: "Ginger", benefits: "Anti-inflammatory effects on airways", color: "#E9C46A" },
+        { name: "Green Tea", benefits: "Contains antioxidants that reduce inflammation", color: "#9BBE7C" },
+        { name: "Apples", benefits: "Contains quercetin that reduces inflammation", color: "#E3242B" },
+        { name: "Bell Peppers", benefits: "High in vitamin C", color: "#F03E3E" },
+        { name: "Tomatoes", benefits: "Contains lycopene that improves lung function", color: "#D22B2B" }
+      ]
+    }
+  ];
 
   // Colors for pie charts
   const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d', '#a4de6c', '#d0ed57'];
@@ -429,131 +517,3 @@ const DietConsole = () => {
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis dataKey="name" />
                               <YAxis />
-                              <Tooltip />
-                              <Legend />
-                              <Bar dataKey="calories" name="Calories" fill="#8884d8" />
-                            </RechartsBarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="progress">
-                    <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                      <h3 className="font-medium text-lg mb-4 flex items-center">
-                        <Activity className="h-5 w-5 mr-2 text-primary" />
-                        Weekly Dosha Balance Progress
-                      </h3>
-                      <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <RechartsBarChart
-                            data={dietRecommendations[selectedDosha as keyof typeof dietRecommendations].weeklyProgress}
-                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                          >
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="day" />
-                            <YAxis label={{ value: 'Balance Score (%)', angle: -90, position: 'insideLeft' }} />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="balance" name="Dosha Balance Score" fill="#82ca9d" />
-                          </RechartsBarChart>
-                        </ResponsiveContainer>
-                      </div>
-                      
-                      <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
-                        <h4 className="font-medium mb-2">Your Progress Analysis</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Your {selectedDosha} balance is improving steadily. Continue following the recommended diet guidelines for optimal results. 
-                          The chart shows your daily balance scores based on recorded meals and activities.
-                        </p>
-                      </div>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="meal-planner">
-                    <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                      <h3 className="font-medium text-lg mb-4 flex items-center">
-                        <CalendarDays className="h-5 w-5 mr-2 text-primary" />
-                        Weekly Meal Planner
-                      </h3>
-                      
-                      <div className="rounded-lg border overflow-hidden">
-                        <div className="grid grid-cols-7 bg-muted text-muted-foreground text-sm">
-                          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => (
-                            <div key={day} className="p-3 border-r last:border-r-0 font-medium text-center">{day}</div>
-                          ))}
-                        </div>
-                        
-                        <div className="grid grid-cols-7 divide-x text-sm">
-                          {[...Array(7)].map((_, dayIndex) => (
-                            <div key={dayIndex} className="p-3 space-y-2 min-h-[150px]">
-                              <div className="p-2 bg-green-50 rounded text-green-800 text-xs">Breakfast</div>
-                              <div className="p-2 bg-blue-50 rounded text-blue-800 text-xs">Lunch</div>
-                              <div className="p-2 bg-amber-50 rounded text-amber-800 text-xs">Dinner</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="mt-6 flex justify-center">
-                        <Button className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90">
-                          <CalendarDays className="mr-2 h-4 w-4" />
-                          Generate Custom Meal Plan
-                        </Button>
-                      </div>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* General Ayurvedic Diet Principles */}
-        <section className="py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="heading-md mb-6 animate-fade-up">Ayurvedic Diet Principles</h2>
-              <p className="paragraph mb-10 animate-fade-up" style={{ animationDelay: "100ms" }}>
-                Beyond dosha-specific recommendations, these universal principles guide a balanced Ayurvedic diet.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {[
-                {
-                  title: "Eat According to Seasons",
-                  description: "Favor cooling foods in summer and warming foods in winter to stay in harmony with nature."
-                },
-                {
-                  title: "Mind Your Digestive Fire",
-                  description: "Eat your main meal at midday when digestion (agni) is strongest, and lighter meals in the morning and evening."
-                },
-                {
-                  title: "Practice Mindful Eating",
-                  description: "Eat in a calm environment without distractions, focusing on the tastes and textures of your food."
-                },
-                {
-                  title: "Include Six Tastes",
-                  description: "Each meal should ideally include the six tastes: sweet, sour, salty, pungent, bitter, and astringent."
-                }
-              ].map((principle, index) => (
-                <div 
-                  key={principle.title} 
-                  className="bg-card border border-border rounded-xl p-6 shadow-sm animate-fade-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <h3 className="font-medium text-lg mb-2">{principle.title}</h3>
-                  <p className="text-muted-foreground">{principle.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
-    </PageTransition>
-  );
-};
-
-export default DietConsole;
