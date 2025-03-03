@@ -48,8 +48,106 @@ const HomeRemedies = () => {
       description: "A calming tea that helps reduce stress and promote restful sleep.",
       category: "Stress Relief",
       ingredients: ["Ashwagandha powder", "Water", "Milk", "Honey"],
-      imageSrc: "https://images.unsplash.com/photo-1551412222-8c7a.69b0e6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      imageSrc: "https://images.unsplash.com/photo-1551412222-8c7a69b0e6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     },
+    {
+      title: "Neem Face Pack",
+      description: "Natural face pack that treats acne and improves skin complexion.",
+      category: "Skin Health",
+      ingredients: ["Neem powder", "Turmeric", "Yogurt", "Honey"],
+      imageSrc: "https://images.unsplash.com/photo-1596467746588-d0a99025245a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Cumin, Coriander & Fennel Tea",
+      description: "Three-seed tea that balances digestion and reduces bloating.",
+      category: "Digestive Health",
+      ingredients: ["Cumin seeds", "Coriander seeds", "Fennel seeds", "Water"],
+      imageSrc: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Brahmi Tonic",
+      description: "Memory-enhancing herb preparation that supports cognitive function.",
+      category: "Brain Health",
+      ingredients: ["Brahmi powder", "Water", "Honey", "Ghee"],
+      imageSrc: "https://images.unsplash.com/photo-1554631221-f9603e6808be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80"
+    },
+    {
+      title: "Amla Juice",
+      description: "Vitamin C-rich juice that boosts immunity and improves skin health.",
+      category: "Immunity",
+      ingredients: ["Amla (Indian gooseberry)", "Water", "Honey"],
+      imageSrc: "https://images.unsplash.com/photo-1596046416768-257e6d1326a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
+    },
+    {
+      title: "Tulsi (Holy Basil) Tea",
+      description: "Aromatic tea that strengthens immunity and relieves respiratory issues.",
+      category: "Respiratory Health",
+      ingredients: ["Tulsi leaves", "Water", "Honey", "Ginger (optional)"],
+      imageSrc: "https://images.unsplash.com/photo-1564890807764-1feef868b6f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Ajwain Water",
+      description: "Digestive aid that relieves gas and improves absorption of nutrients.",
+      category: "Digestive Health",
+      ingredients: ["Ajwain (carom seeds)", "Water"],
+      imageSrc: "https://images.unsplash.com/photo-1556679343-c1c1c9308e4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80"
+    },
+    {
+      title: "Cinnamon and Honey Mix",
+      description: "Antioxidant-rich blend that supports heart health and balances blood sugar.",
+      category: "Metabolic Health",
+      ingredients: ["Cinnamon powder", "Raw honey"],
+      imageSrc: "https://images.unsplash.com/photo-1612165399085-c7dd9a7d7f6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Ghee and Black Pepper",
+      description: "Warming remedy for coughs and congestion that soothes the throat.",
+      category: "Respiratory Health",
+      ingredients: ["Ghee (clarified butter)", "Black pepper", "Honey"],
+      imageSrc: "https://images.unsplash.com/photo-1620405116976-f735da1c78cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Mustard Oil Massage",
+      description: "Warming oil treatment for joint pain and muscle stiffness.",
+      category: "Pain Relief",
+      ingredients: ["Mustard oil", "Camphor (optional)", "Eucalyptus oil (optional)"],
+      imageSrc: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Coconut Oil Hair Treatment",
+      description: "Nourishing oil that strengthens hair and soothes the scalp.",
+      category: "Hair Care",
+      ingredients: ["Virgin coconut oil", "Curry leaves (optional)", "Hibiscus flowers (optional)"],
+      imageSrc: "https://images.unsplash.com/photo-1609108158312-bed14e5122e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Cardamom Infused Water",
+      description: "Aromatic drink that freshens breath and aids digestion.",
+      category: "Digestive Health",
+      ingredients: ["Green cardamom pods", "Water", "Mint leaves (optional)"],
+      imageSrc: "https://images.unsplash.com/photo-1631210882920-a6e6a5d27da9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Jaggery and Ginger",
+      description: "Sweet and spicy combination that relieves cough and cold symptoms.",
+      category: "Respiratory Health",
+      ingredients: ["Jaggery", "Fresh ginger", "Water"],
+      imageSrc: "https://images.unsplash.com/photo-1600618528240-fb9fc964b853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Rose Water Toner",
+      description: "Gentle toner that refreshes and balances skin pH.",
+      category: "Skin Health",
+      ingredients: ["Rose water", "Aloe vera gel (optional)", "Witch hazel (optional)"],
+      imageSrc: "https://images.unsplash.com/photo-1586182987320-4f17e36640df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
+    },
+    {
+      title: "Shatavari Milk",
+      description: "Hormone-balancing tonic that supports female reproductive health.",
+      category: "Women's Health",
+      ingredients: ["Shatavari powder", "Milk", "Honey", "Cardamom"],
+      imageSrc: "https://images.unsplash.com/photo-1626682440957-12466531adbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    }
   ];
 
   const categories = Array.from(new Set(remedies.map(remedy => remedy.category)));

@@ -1,5 +1,4 @@
-
-import { MapPin, Video, Pill, Heart, ActivitySquare, FileText, FolderOpen, Lock, Upload, Play } from "lucide-react";
+import { MapPin, Video, Pill, Heart, ActivitySquare, FileText, FolderOpen, Lock, Upload, Play, ShoppingCart, Package, Search } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,14 @@ interface ServiceFeature {
     level: string;
     videoUrl: string;
   }[];
+  products?: {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    category: string;
+    imageSrc: string;
+  }[];
 }
 
 const Services = () => {
@@ -32,6 +39,9 @@ const Services = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [cart, setCart] = useState<Array<{id: string, name: string, price: number, quantity: number}>>([]);
   
   const requestLocation = () => {
     if (navigator.geolocation) {
@@ -106,6 +116,47 @@ const Services = () => {
     }, 2000);
   };
 
+  const addToCart = (product: {id: string, name: string, price: number}) => {
+    const existingItem = cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.id === product.id 
+          ? {...item, quantity: item.quantity + 1} 
+          : item
+      ));
+    } else {
+      setCart([...cart, {...product, quantity: 1}]);
+    }
+    
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+      variant: "default",
+    });
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart(cart.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId: string, newQuantity: number) => {
+    if (newQuantity < 1) {
+      removeFromCart(productId);
+      return;
+    }
+    
+    setCart(cart.map(item => 
+      item.id === productId 
+        ? {...item, quantity: newQuantity} 
+        : item
+    ));
+  };
+
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
   const services: ServiceFeature[] = [
     {
       id: "virtual-clinic",
@@ -120,6 +171,56 @@ const Services = () => {
       description: "Order authentic Ayurvedic medicines and herbal supplements with doorstep delivery service.",
       icon: <Pill className="text-ayurvedic-forest" size={24} />,
       imageSrc: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+      products: [
+        {
+          id: "p1",
+          name: "Ashwagandha Tablets",
+          description: "Traditional herb that helps reduce stress and anxiety while boosting energy levels.",
+          price: 14.99,
+          category: "Supplements",
+          imageSrc: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "p2",
+          name: "Triphala Powder",
+          description: "Digestive tonic that supports regular elimination and detoxification.",
+          price: 12.99,
+          category: "Digestive Health",
+          imageSrc: "https://images.unsplash.com/photo-1605139923904-6cad593eda18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "p3",
+          name: "Turmeric Capsules",
+          description: "Potent anti-inflammatory and antioxidant supplement.",
+          price: 9.99,
+          category: "Supplements",
+          imageSrc: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "p4",
+          name: "Brahmi Oil",
+          description: "Traditional hair oil that nourishes the scalp and promotes hair growth.",
+          price: 16.99,
+          category: "Hair Care",
+          imageSrc: "https://images.unsplash.com/photo-1608571423902-abb638917549?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "p5",
+          name: "Neem Tablets",
+          description: "Supports healthy skin and the immune system.",
+          price: 11.99,
+          category: "Skin Health",
+          imageSrc: "https://images.unsplash.com/photo-1577009683331-a6f9e5d06233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "p6",
+          name: "Chyawanprash",
+          description: "Traditional herbal jam that boosts immunity and vitality.",
+          price: 19.99,
+          category: "Immunity",
+          imageSrc: "https://images.unsplash.com/photo-1593097693516-9b5448961d4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        }
+      ]
     },
     {
       id: "yoga-meditation",
@@ -225,7 +326,7 @@ const Services = () => {
                     imageSrc={service.imageSrc}
                     delay={index * 100}
                     className={`${service.comingSoon ? "opacity-80" : ""} ${selectedService === service.id ? "ring-2 ring-ayurvedic-forest" : ""}`}
-                    onClick={() => service.details || service.sessions ? handleServiceClick(service.id) : undefined}
+                    onClick={() => service.details || service.sessions || service.products ? handleServiceClick(service.id) : undefined}
                   />
                   {service.comingSoon && (
                     <div className="absolute top-4 right-4 bg-primary text-white py-1 px-3 rounded-full text-xs font-medium">
@@ -271,10 +372,166 @@ const Services = () => {
                       </Button>
                     </div>
                   )}
+                  {service.id === "e-pharmacy" && (
+                    <div className="absolute bottom-4 right-4">
+                      <Button 
+                        variant="secondary" 
+                        size="sm" 
+                        onClick={() => handleServiceClick(service.id)}
+                        className="bg-white hover:bg-gray-100"
+                      >
+                        <ShoppingCart className="mr-2 h-4 w-4" />
+                        View Products
+                      </Button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
 
+            {/* E-Pharmacy Section */}
+            {selectedService === "e-pharmacy" && (
+              <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-ayurvedic-forest">Patanjali Ayurved E-Pharmacy</h3>
+                  <Pill className="text-ayurvedic-forest" size={24} />
+                </div>
+                
+                <div className="mb-8">
+                  <div className="flex flex-col md:flex-row gap-4 mb-6">
+                    <div className="relative flex-grow">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                      <input
+                        type="text"
+                        placeholder="Search for products..."
+                        className="w-full rounded-lg border border-input pl-10 pr-4 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      {["All", "Supplements", "Digestive Health", "Hair Care", "Skin Health", "Immunity"].map((category) => (
+                        <button
+                          key={category}
+                          className={`px-3 py-1 text-sm rounded-full whitespace-nowrap ${
+                            (selectedCategory === category || (category === "All" && !selectedCategory))
+                              ? "bg-ayurvedic-forest text-white"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                          onClick={() => setSelectedCategory(category === "All" ? null : category)}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {services
+                      .find(s => s.id === "e-pharmacy")?.products
+                      ?.filter(product => 
+                        (!selectedCategory || product.category === selectedCategory) && 
+                        (searchQuery === "" || 
+                          product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          product.description.toLowerCase().includes(searchQuery.toLowerCase()))
+                      )
+                      .map((product) => (
+                        <div key={product.id} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                          <div className="h-48 overflow-hidden bg-gray-100">
+                            <img 
+                              src={product.imageSrc} 
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="p-4">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <h4 className="font-medium text-lg">{product.name}</h4>
+                                <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full mt-1">{product.category}</span>
+                              </div>
+                              <span className="font-semibold text-lg">${product.price.toFixed(2)}</span>
+                            </div>
+                            <p className="mt-2 text-sm text-gray-600 line-clamp-3">{product.description}</p>
+                            <Button 
+                              className="mt-4 w-full bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
+                              onClick={() => addToCart({id: product.id, name: product.name, price: product.price})}
+                            >
+                              <ShoppingCart className="mr-2 h-4 w-4" />
+                              Add to Cart
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                
+                {/* Shopping Cart */}
+                {cart.length > 0 && (
+                  <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <h4 className="text-xl font-semibold text-ayurvedic-forest">Your Cart</h4>
+                      <span className="bg-ayurvedic-forest text-white text-sm py-1 px-3 rounded-full">{cart.length} item(s)</span>
+                    </div>
+                    
+                    <div className="divide-y divide-gray-200">
+                      {cart.map((item) => (
+                        <div key={item.id} className="py-3 flex items-center justify-between">
+                          <div className="flex-grow">
+                            <h5 className="font-medium">{item.name}</h5>
+                            <div className="flex items-center mt-1">
+                              <button 
+                                className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-l-md"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              >
+                                -
+                              </button>
+                              <span className="w-8 h-6 flex items-center justify-center border-t border-b border-gray-300">
+                                {item.quantity}
+                              </span>
+                              <button 
+                                className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-r-md"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+                            <button 
+                              className="text-red-500 text-sm mt-1 hover:text-red-700"
+                              onClick={() => removeFromCart(item.id)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+                      <div className="text-lg font-semibold">Total: ${calculateTotal().toFixed(2)}</div>
+                      <Button 
+                        className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
+                        onClick={() => {
+                          toast({
+                            title: "Order Placed!",
+                            description: "Your order has been successfully placed. You will receive a confirmation email shortly.",
+                            variant: "default",
+                          });
+                          setCart([]);
+                        }}
+                      >
+                        <Package className="mr-2 h-4 w-4" />
+                        Checkout
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            
             {/* Document Storage Details Section */}
             {selectedService === "e-health" && (
               <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
@@ -418,17 +675,4 @@ const Services = () => {
                     Book Virtual Consultation
                   </Button>
                   <Button variant="outline" className="rounded-full border-white text-white hover:bg-white/10">
-                    <ActivitySquare className="mr-2 h-4 w-4" />
-                    Try Yoga Session
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </PageTransition>
-  );
-};
-
-export default Services;
+                    <ActivitySquare className="
