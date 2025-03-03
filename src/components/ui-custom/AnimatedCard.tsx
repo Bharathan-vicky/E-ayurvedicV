@@ -40,7 +40,8 @@ const AnimatedCard = ({
           <img
             src={imageSrc}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 animate-reveal"
+            style={{ animationDelay: `${delay + 100}ms` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         </div>

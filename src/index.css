@@ -1,162 +1,127 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 50 30% 98%;
-    --foreground: 25 30% 10%;
-
-    --card: 50 30% 99%;
-    --card-foreground: 25 30% 10%;
-
-    --popover: 50 30% 99%;
-    --popover-foreground: 25 30% 10%;
-
-    --primary: 140 15% 40%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 30 20% 70%;
-    --secondary-foreground: 25 30% 10%;
-
-    --muted: 30 10% 94%;
-    --muted-foreground: 25 20% 35%;
-
-    --accent: 30 40% 65%;
-    --accent-foreground: 25 40% 15%;
-
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 30 15% 90%;
-    --input: 30 15% 90%;
-    --ring: 140 15% 40%;
-
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
     --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Ayurvedic Colors */
+    --ayurvedic-earth: 26 83.3% 41.1%;
+    --ayurvedic-forest: 122 39.5% 38.4%;
+    --ayurvedic-clay: 8 47.8% 65.9%;
+    --ayurvedic-spice: 14 95.8% 53.1%;
+    --ayurvedic-sand: 39 95.8% 53.1%;
   }
 
   .dark {
-    --background: 25 30% 8%;
-    --foreground: 50 30% 93%;
-
-    --card: 25 30% 10%;
-    --card-foreground: 50 30% 93%;
-
-    --popover: 25 30% 10%;
-    --popover-foreground: 50 30% 93%;
-
-    --primary: 140 20% 30%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 30 20% 25%;
-    --secondary-foreground: 50 30% 93%;
-
-    --muted: 25 20% 15%;
-    --muted-foreground: 50 20% 65%;
-
-    --accent: 30 25% 25%;
-    --accent-foreground: 50 30% 93%;
-
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 25 20% 20%;
-    --input: 25 20% 20%;
-    --ring: 140 20% 30%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 35.5 91.7% 32.9%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border antialiased;
+    @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-medium tracking-tight;
-  }
-
-  p, span, a, button, input, select, textarea {
-    @apply font-sans;
-  }
-}
-
-@layer components {
-  .glass-card {
-    @apply bg-white/30 backdrop-blur-md border border-white/30 shadow-lg;
-  }
-  
-  .page-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   .heading-xl {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight;
+    @apply text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight;
   }
   
   .heading-lg {
-    @apply text-3xl md:text-4xl font-serif font-medium tracking-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl font-serif font-bold tracking-tight;
   }
   
   .heading-md {
-    @apply text-2xl md:text-3xl font-serif font-medium;
+    @apply text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-tight;
   }
   
   .heading-sm {
-    @apply text-xl md:text-2xl font-serif;
+    @apply text-xl sm:text-2xl font-serif font-bold tracking-tight;
   }
   
   .paragraph {
-    @apply text-base md:text-lg leading-relaxed text-foreground/80;
+    @apply text-base sm:text-lg leading-relaxed text-muted-foreground;
+  }
+}
+
+@layer utilities {
+  .card-hover {
+    @apply hover:shadow-md hover:-translate-y-1;
   }
   
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
   }
-}
-
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 400ms, transform 400ms;
-}
-
-.page-transition-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 300ms, transform 300ms;
+  
+  .animate-reveal {
+    animation: reveal 0.8s ease forwards;
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
