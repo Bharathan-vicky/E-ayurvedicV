@@ -1,4 +1,3 @@
-
 import { MapPin, Video, Pill, Heart, ActivitySquare, FileText, FolderOpen, Lock, Upload, Play, ShoppingCart, Package, Search } from "lucide-react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
@@ -101,7 +100,6 @@ const Services = () => {
     
     setUploadStatus('uploading');
     
-    // Simulate backend upload with timeout
     setTimeout(() => {
       setUploadStatus('success');
       toast({
@@ -111,7 +109,6 @@ const Services = () => {
       });
       setSelectedFile(null);
       
-      // Reset file input
       const fileInput = document.getElementById('document-upload') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
     }, 2000);
@@ -156,6 +153,10 @@ const Services = () => {
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  const openPatanjaliWebsite = () => {
+    window.open("https://www.patanjaliayurved.net/", "_blank", "noopener,noreferrer");
   };
 
   const services: ServiceFeature[] = [
@@ -378,7 +379,7 @@ const Services = () => {
                       <Button 
                         variant="secondary" 
                         size="sm" 
-                        onClick={() => handleServiceClick(service.id)}
+                        onClick={openPatanjaliWebsite}
                         className="bg-white hover:bg-gray-100"
                       >
                         <ShoppingCart className="mr-2 h-4 w-4" />
@@ -390,7 +391,6 @@ const Services = () => {
               ))}
             </div>
 
-            {/* E-Pharmacy Section */}
             {selectedService === "e-pharmacy" && (
               <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
                 <div className="flex items-center justify-between mb-6">
@@ -467,73 +467,69 @@ const Services = () => {
                   </div>
                 </div>
                 
-                {/* Shopping Cart */}
-                {cart.length > 0 && (
-                  <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-xl font-semibold text-ayurvedic-forest">Your Cart</h4>
-                      <span className="bg-ayurvedic-forest text-white text-sm py-1 px-3 rounded-full">{cart.length} item(s)</span>
-                    </div>
-                    
-                    <div className="divide-y divide-gray-200">
-                      {cart.map((item) => (
-                        <div key={item.id} className="py-3 flex items-center justify-between">
-                          <div className="flex-grow">
-                            <h5 className="font-medium">{item.name}</h5>
-                            <div className="flex items-center mt-1">
-                              <button 
-                                className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-l-md"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              >
-                                -
-                              </button>
-                              <span className="w-8 h-6 flex items-center justify-center border-t border-b border-gray-300">
-                                {item.quantity}
-                              </span>
-                              <button 
-                                className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-r-md"
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+                <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-xl font-semibold text-ayurvedic-forest">Your Cart</h4>
+                    <span className="bg-ayurvedic-forest text-white text-sm py-1 px-3 rounded-full">{cart.length} item(s)</span>
+                  </div>
+                  
+                  <div className="divide-y divide-gray-200">
+                    {cart.map((item) => (
+                      <div key={item.id} className="py-3 flex items-center justify-between">
+                        <div className="flex-grow">
+                          <h5 className="font-medium">{item.name}</h5>
+                          <div className="flex items-center mt-1">
                             <button 
-                              className="text-red-500 text-sm mt-1 hover:text-red-700"
-                              onClick={() => removeFromCart(item.id)}
+                              className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-l-md"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             >
-                              Remove
+                              -
+                            </button>
+                            <span className="w-8 h-6 flex items-center justify-center border-t border-b border-gray-300">
+                              {item.quantity}
+                            </span>
+                            <button 
+                              className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-r-md"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            >
+                              +
                             </button>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
-                      <div className="text-lg font-semibold">Total: ${calculateTotal().toFixed(2)}</div>
-                      <Button 
-                        className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
-                        onClick={() => {
-                          toast({
-                            title: "Order Placed!",
-                            description: "Your order has been successfully placed. You will receive a confirmation email shortly.",
-                            variant: "default",
-                          });
-                          setCart([]);
-                        }}
-                      >
-                        <Package className="mr-2 h-4 w-4" />
-                        Checkout
-                      </Button>
-                    </div>
+                        <div className="text-right">
+                          <div className="font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+                          <button 
+                            className="text-red-500 text-sm mt-1 hover:text-red-700"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                )}
+                  
+                  <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+                    <div className="text-lg font-semibold">Total: ${calculateTotal().toFixed(2)}</div>
+                    <Button 
+                      className="bg-ayurvedic-forest hover:bg-ayurvedic-forest/90"
+                      onClick={() => {
+                        toast({
+                          title: "Order Placed!",
+                          description: "Your order has been successfully placed. You will receive a confirmation email shortly.",
+                          variant: "default",
+                        });
+                        setCart([]);
+                      }}
+                    >
+                      <Package className="mr-2 h-4 w-4" />
+                      Checkout
+                    </Button>
+                  </div>
+                </div>
               </div>
             )}
             
-            {/* Document Storage Details Section */}
             {selectedService === "e-health" && (
               <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
                 <div className="flex items-center justify-between mb-6">
@@ -609,7 +605,6 @@ const Services = () => {
               </div>
             )}
             
-            {/* Yoga & Meditation Sessions Section */}
             {selectedService === "yoga-meditation" && (
               <div className="mt-12 p-6 bg-white rounded-lg shadow-lg animate-fade-up">
                 <div className="flex items-center justify-between mb-6">
