@@ -11,6 +11,7 @@ interface AnimatedCardProps {
   onClick?: () => void;
   delay?: number;
   imageReveal?: boolean;
+  badge?: string;
 }
 
 const AnimatedCard = ({
@@ -22,6 +23,7 @@ const AnimatedCard = ({
   onClick,
   delay = 0,
   imageReveal = false,
+  badge,
 }: AnimatedCardProps) => {
   const delayStyle = {
     animationDelay: `${delay}ms`,
@@ -49,6 +51,12 @@ const AnimatedCard = ({
             style={{ animationDelay: `${delay + 100}ms` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          
+          {badge && (
+            <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-primary/90 text-xs font-medium text-primary-foreground">
+              {badge}
+            </div>
+          )}
         </div>
       )}
       
