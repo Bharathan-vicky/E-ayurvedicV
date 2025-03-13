@@ -10,6 +10,7 @@ interface AnimatedCardProps {
   className?: string;
   onClick?: () => void;
   delay?: number;
+  imageReveal?: boolean;
 }
 
 const AnimatedCard = ({
@@ -20,6 +21,7 @@ const AnimatedCard = ({
   className,
   onClick,
   delay = 0,
+  imageReveal = false,
 }: AnimatedCardProps) => {
   const delayStyle = {
     animationDelay: `${delay}ms`,
@@ -40,7 +42,10 @@ const AnimatedCard = ({
           <img
             src={imageSrc}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 animate-reveal"
+            className={cn(
+              "h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105",
+              imageReveal ? "animate-reveal" : "animate-fade-up"
+            )}
             style={{ animationDelay: `${delay + 100}ms` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
