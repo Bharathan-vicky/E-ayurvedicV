@@ -1,81 +1,69 @@
 
 import PageTransition from "@/components/ui-custom/PageTransition";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
-import { Input } from "@/components/ui/input";
-import { BookOpenText, Search } from "lucide-react";
+import { BookOpen, Bookmark, BookText } from "lucide-react";
 import { useState } from "react";
 
 const Articles = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  
-  const articles = [
+  const [activeTab, setActiveTab] = useState("featured");
+
+  const featuredArticles = [
     {
-      title: "Understanding the Three Doshas",
-      description: "An in-depth look at Vata, Pitta, and Kapha and how they influence your health and wellbeing.",
-      date: "May 1, 2023",
-      category: "Fundamentals",
-      imageSrc: "https://images.unsplash.com/photo-1506126613408-eca07ce68773"
+      title: "Understanding Your Dosha: A Guide to Ayurvedic Body Types",
+      description: "Learn about Vata, Pitta, and Kapha doshas and discover your unique Ayurvedic constitution",
+      imageSrc: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+      badge: "Featured"
     },
     {
-      title: "Seasonal Eating According to Ayurveda",
-      description: "How to adjust your diet based on seasonal changes to maintain optimal health.",
-      date: "June 15, 2023",
-      category: "Diet",
-      imageSrc: "https://images.unsplash.com/photo-1464226184884-fa280b87c399",
-      badge: "Popular"
+      title: "Seasonal Eating: Ayurvedic Diet for Each Season",
+      description: "How to adjust your diet according to seasonal changes for optimal health",
+      imageSrc: "https://images.unsplash.com/photo-1464226184884-fa280b87c399"
     },
     {
-      title: "Ayurvedic Daily Routine (Dinacharya)",
-      description: "Establishing a daily routine aligned with natural rhythms for better health.",
-      date: "July 22, 2023",
-      category: "Lifestyle",
-      imageSrc: "https://images.unsplash.com/photo-1506126279646-a697c78a3553"
-    },
-    {
-      title: "Herbs for Mental Clarity and Focus",
-      description: "Ayurvedic herbs and practices to enhance cognitive function and mental performance.",
-      date: "August 5, 2023",
-      category: "Herbs",
-      imageSrc: "https://images.unsplash.com/photo-1498837167922-ddd27525d352"
-    },
-    {
-      title: "Ayurvedic Approaches to Common Digestive Issues",
-      description: "Natural remedies and lifestyle adjustments to support digestive health.",
-      date: "September 12, 2023",
-      category: "Health",
-      imageSrc: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71"
-    },
-    {
-      title: "The Science Behind Ayurvedic Pulse Diagnosis",
-      description: "Understanding the ancient practice of nadi pariksha (pulse diagnosis) in Ayurvedic medicine.",
-      date: "October 3, 2023",
-      category: "Diagnosis",
-      imageSrc: "https://images.unsplash.com/photo-1585435557343-3b348031e799",
-      badge: "New"
-    },
-    {
-      title: "Ayurveda for Women's Health",
-      description: "Specific Ayurvedic practices and herbs to support women through different life stages.",
-      date: "November 18, 2023",
-      category: "Women's Health",
-      imageSrc: "https://images.unsplash.com/photo-1515377905703-c4788e51af15"
-    },
-    {
-      title: "Panchakarma: The Five Actions of Detoxification",
-      description: "An overview of the traditional Ayurvedic cleansing and rejuvenation therapy.",
-      date: "December 7, 2023",
-      category: "Cleansing",
-      imageSrc: "https://images.unsplash.com/photo-1552693673-1bf958298935"
+      title: "Ayurvedic Daily Routine (Dinacharya) for Modern Life",
+      description: "Incorporate ancient wisdom into your daily habits for improved well-being",
+      imageSrc: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe"
     }
   ];
 
-  const filteredArticles = searchQuery 
-    ? articles.filter(article => 
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        article.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.description.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : articles;
+  const healthArticles = [
+    {
+      title: "Ayurvedic Approach to Digestive Health",
+      description: "Natural remedies and dietary guidelines for improving digestion",
+      imageSrc: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71"
+    },
+    {
+      title: "Stress Management Through Ayurveda",
+      description: "Ancient techniques for calming the mind and reducing stress",
+      imageSrc: "https://images.unsplash.com/photo-1506126279646-a697353d3166"
+    },
+    {
+      title: "Ayurvedic Herbs for Immune Support",
+      description: "Powerful herbs and formulations to strengthen your immune system",
+      imageSrc: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf",
+      badge: "Popular"
+    }
+  ];
+
+  const lifestyleArticles = [
+    {
+      title: "Ayurvedic Skincare: Natural Beauty Rituals",
+      description: "Traditional beauty practices and herbal formulations for healthy skin",
+      imageSrc: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c"
+    },
+    {
+      title: "Yoga and Ayurveda: The Perfect Combination",
+      description: "How these sister sciences work together for holistic health",
+      imageSrc: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b"
+    },
+    {
+      title: "Creating an Ayurvedic Kitchen",
+      description: "Essential spices, tools, and practices for Ayurvedic cooking",
+      imageSrc: "https://images.unsplash.com/photo-1556911073-38141963c9e0",
+      badge: "New"
+    }
+  ];
 
   return (
     <PageTransition>
@@ -89,26 +77,8 @@ const Articles = () => {
                 Ayurvedic Articles
               </h1>
               <p className="mt-6 text-xl animate-fade-up" style={{ animationDelay: "200ms" }}>
-                Explore our collection of in-depth articles on Ayurvedic principles, 
-                practices, and applications for modern health and wellness.
+                Explore our collection of articles on Ayurvedic principles, practices, and applications for modern wellness.
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Search Section */}
-        <section className="pb-10">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search articles..."
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
             </div>
           </div>
         </section>
@@ -116,31 +86,75 @@ const Articles = () => {
         {/* Articles Section */}
         <section className="pb-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {filteredArticles.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredArticles.map((article, index) => (
-                  <AnimatedCard
-                    key={article.title}
-                    title={article.title}
-                    description={article.description}
-                    imageSrc={article.imageSrc}
-                    badge={article.badge}
-                    delay={index * 100}
-                    imageReveal
-                    icon={<BookOpenText size={20} className="text-ayurvedic-forest" />}
-                  >
-                    <div className="mt-2 text-sm text-muted-foreground">
-                      <span className="font-medium text-ayurvedic-forest">{article.category}</span> • {article.date}
-                    </div>
-                  </AnimatedCard>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <h3 className="text-lg font-medium mb-2">No articles found</h3>
-                <p className="text-muted-foreground">Try adjusting your search query</p>
-              </div>
-            )}
+            <div className="max-w-3xl mx-auto mb-12">
+              <Tabs 
+                defaultValue="featured" 
+                className="w-full"
+                onValueChange={(value) => setActiveTab(value)}
+              >
+                <div className="flex justify-center mb-8">
+                  <TabsList className="grid grid-cols-3 w-full max-w-md">
+                    <TabsTrigger value="featured">
+                      <BookText className="mr-2 h-4 w-4" />
+                      <span>Featured</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="health">
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      <span>Health</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="lifestyle">
+                      <Bookmark className="mr-2 h-4 w-4" />
+                      <span>Lifestyle</span>
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+
+                <TabsContent value="featured">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {featuredArticles.map((item, index) => (
+                      <AnimatedCard
+                        key={item.title}
+                        title={item.title}
+                        description={item.description}
+                        imageSrc={item.imageSrc}
+                        delay={index * 100}
+                        badge={item.badge}
+                      />
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="health">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {healthArticles.map((item, index) => (
+                      <AnimatedCard
+                        key={item.title}
+                        title={item.title}
+                        description={item.description}
+                        imageSrc={item.imageSrc}
+                        delay={index * 100}
+                        badge={item.badge}
+                      />
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="lifestyle">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {lifestyleArticles.map((item, index) => (
+                      <AnimatedCard
+                        key={item.title}
+                        title={item.title}
+                        description={item.description}
+                        imageSrc={item.imageSrc}
+                        delay={index * 100}
+                        badge={item.badge}
+                      />
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </section>
       </div>

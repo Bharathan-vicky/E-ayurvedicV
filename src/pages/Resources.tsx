@@ -2,7 +2,7 @@
 import PageTransition from "@/components/ui-custom/PageTransition";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
-import { Book, Library, ArticleIcon } from "lucide-react";
+import { Book, Library, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 const Resources = () => {
@@ -104,7 +104,7 @@ const Resources = () => {
                       <span>Books</span>
                     </TabsTrigger>
                     <TabsTrigger value="journals">
-                      <ArticleIcon className="mr-2 h-4 w-4" />
+                      <BookOpen className="mr-2 h-4 w-4" />
                       <span>Journals</span>
                     </TabsTrigger>
                     <TabsTrigger value="digital">
