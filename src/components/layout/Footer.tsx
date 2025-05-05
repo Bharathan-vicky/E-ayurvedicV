@@ -25,9 +25,9 @@ const Footer = () => {
     {
       title: "Resources",
       links: [
-        { name: "Research", path: "/" },
-        { name: "Articles", path: "/" },
-        { name: "References", path: "/" },
+        { name: "Resources", path: "/resources" },
+        { name: "Articles", path: "/articles" },
+        { name: "References", path: "/references" },
       ],
     },
   ];

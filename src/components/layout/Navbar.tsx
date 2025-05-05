@@ -27,6 +27,9 @@ const Navbar = () => {
     { name: "Plant Properties", path: "/plants" },
     { name: "Diet Console", path: "/diet" },
     { name: "Disease Solutions", path: "/solutions" },
+    { name: "Resources", path: "/resources" },
+    { name: "Articles", path: "/articles" },
+    { name: "References", path: "/references" },
   ];
 
   const isActive = (path: string) => {
@@ -54,7 +57,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}

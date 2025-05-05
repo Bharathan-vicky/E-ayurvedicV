@@ -10,6 +10,9 @@ import PlantProperties from "./pages/PlantProperties";
 import DietConsole from "./pages/DietConsole";
 import DiseaseSolutions from "./pages/DiseaseSolutions";
 import Services from "./pages/Services";
+import Resources from "./pages/Resources";
+import Articles from "./pages/Articles";
+import References from "./pages/References";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -32,6 +35,9 @@ const App = () => (
               <Route path="/diet" element={<DietConsole />} />
               <Route path="/solutions" element={<DiseaseSolutions />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/references" element={<References />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
