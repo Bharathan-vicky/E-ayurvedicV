@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import PageTransition from "@/components/ui-custom/PageTransition";
 import AnimatedCard from "@/components/ui-custom/AnimatedCard";
@@ -570,7 +569,6 @@ const PlantProperties = () => {
                     {item.plants.slice(0, 6).map((plant) => (
                       <div 
                         key={plant.id} 
-                        onClick={() => setSelectedPlant(plant)}
                         className="flex items-center"
                         onClick={() => setSelectedPlant(plant)}
                       >
