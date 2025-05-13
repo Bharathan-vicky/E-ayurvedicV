@@ -119,6 +119,12 @@ const Navbar = () => {
                 <Link to="/signup">
                   <Button size="sm">Sign up</Button>
                 </Link>
+                <Link to="/signin" className="ml-2">
+                  <Button variant="default" size="sm" className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white">
+                    <LogIn className="h-4 w-4" />
+                    Log in
+                  </Button>
+                </Link>
               </>
             )}
           </div>
@@ -144,6 +150,15 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            )}
+
+            {!user && (
+              <Link to="/signin" className="mr-2">
+                <Button variant="default" size="sm" className="flex items-center gap-1">
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </Button>
+              </Link>
             )}
 
             <button 
