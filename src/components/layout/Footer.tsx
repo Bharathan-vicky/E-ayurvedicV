@@ -64,23 +64,27 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="border-t border-border mt-12 pt-8">
+        {/* Student Info - Made more prominent */}
+        <div className="border-t border-border mt-12 pt-6 mb-4">
+          <div className="text-center">
+            <p className="font-medium text-primary text-base">
+              Developed by: <span className="font-semibold">Vijayalakshmi.S</span> | 2nd year MCA | Roll No: 311423622056
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-border pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-muted-foreground">
               © {currentYear} e-Ayurvedic. All rights reserved.
             </p>
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 mt-4 md:mt-0">
-              <p className="text-sm text-muted-foreground">
-                Developed by: Vijayalakshmi.S | 2nd year MCA | Roll No: 311423622056
-              </p>
-              <div className="flex space-x-6">
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                  Privacy Policy
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                  Terms of Service
-                </a>
-              </div>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                Terms of Service
+              </a>
             </div>
           </div>
         </div>
