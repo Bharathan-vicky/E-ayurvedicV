@@ -1,12 +1,22 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserRound, LogIn } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,14 +86,74 @@ const Navbar = () => {
             ))}
           </div>
 
+          {/* Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                    <UserRound className="h-4 w-4" />
+                    <span>{user.name || user.email.split('@')[0]}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem className="text-sm">Account Settings</DropdownMenuItem>
+                  <DropdownMenuItem className="text-sm">My Favorites</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className="text-sm text-destructive" 
+                    onClick={signOut}
+                  >
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link to="/signin">
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Sign in
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button size="sm">Sign up</Button>
+                </Link>
+              </>
+            )}
+          </div>
+
           {/* Mobile menu button */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center">
+            {user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="mr-2">
+                    <UserRound className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem className="text-sm">Account</DropdownMenuItem>
+                  <DropdownMenuItem className="text-sm">Favorites</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className="text-sm text-destructive" 
+                    onClick={signOut}
+                  >
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-foreground"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -104,6 +174,20 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {!user && (
+              <div className="pt-2 border-t border-border flex flex-col gap-2">
+                <Link to="/signin" className="w-full">
+                  <Button variant="outline" className="w-full justify-start">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Sign in
+                  </Button>
+                </Link>
+                <Link to="/signup" className="w-full">
+                  <Button className="w-full">Sign up</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
