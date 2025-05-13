@@ -1,6 +1,6 @@
 
 import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { cn, glassEffect, hoverEffect } from "@/lib/utils";
 
 interface AnimatedCardProps {
   title: string;
@@ -12,6 +12,8 @@ interface AnimatedCardProps {
   delay?: number;
   imageReveal?: boolean;
   badge?: string;
+  glassType?: "light" | "medium" | "heavy" | "dark";
+  hoverType?: "lift" | "glow" | "scale" | "border" | "shine" | "none";
 }
 
 const AnimatedCard = ({
@@ -24,6 +26,8 @@ const AnimatedCard = ({
   delay = 0,
   imageReveal = false,
   badge,
+  glassType = "medium",
+  hoverType = "lift",
 }: AnimatedCardProps) => {
   const delayStyle = {
     animationDelay: `${delay}ms`,
@@ -32,7 +36,9 @@ const AnimatedCard = ({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-500 animate-fade-up card-hover",
+        "group relative overflow-hidden rounded-2xl border border-border shadow-sm transition-all duration-500 animate-fade-up",
+        glassEffect[glassType],
+        hoverType !== "none" && hoverEffect[hoverType],
         onClick && "cursor-pointer",
         className
       )}

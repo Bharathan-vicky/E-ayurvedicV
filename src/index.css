@@ -102,6 +102,14 @@
     transform: scale(1.2);
     opacity: 0;
   }
+
+  .glass {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-md bg-black/30 border border-white/10;
+  }
   
   @keyframes fadeUp {
     from {
@@ -123,5 +131,42 @@
       opacity: 1;
       transform: scale(1);
     }
+  }
+
+  @keyframes shine {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 100%;
+    }
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)];
+  }
+  
+  .hover-scale {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  .hover-border {
+    @apply transition-all duration-300 hover:border-primary/50;
+  }
+
+  .hover-shine {
+    @apply relative overflow-hidden;
+  }
+  
+  .hover-shine:hover::before {
+    animation: shine 1.5s ease;
+  }
+  
+  .hover-shine::before {
+    @apply absolute content-[''] w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -left-[100%] top-0 transition-all;
   }
 }
