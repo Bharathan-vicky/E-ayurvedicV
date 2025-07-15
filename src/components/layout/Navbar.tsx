@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, UserRound, LogIn } from "lucide-react";
+import { Menu, X, UserRound, LogIn, Home, Leaf, TreePine, UtensilsCrossed, Heart, BookOpen, FileText, Library } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,14 +32,14 @@ const Navbar = () => {
   }, [location]);
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Home Remedies", path: "/remedies" },
-    { name: "Plant Properties", path: "/plants" },
-    { name: "Diet Console", path: "/diet" },
-    { name: "Disease Solutions", path: "/solutions" },
-    { name: "Resources", path: "/resources" },
-    { name: "Articles", path: "/articles" },
-    { name: "References", path: "/references" },
+    { name: "Home", path: "/", icon: Home },
+    { name: "Home Remedies", path: "/remedies", icon: Leaf },
+    { name: "Plant Properties", path: "/plants", icon: TreePine },
+    { name: "Diet Console", path: "/diet", icon: UtensilsCrossed },
+    { name: "Disease Solutions", path: "/solutions", icon: Heart },
+    { name: "Resources", path: "/resources", icon: BookOpen },
+    { name: "Articles", path: "/articles", icon: FileText },
+    { name: "References", path: "/references", icon: Library },
   ];
 
   const isActive = (path: string) => {
@@ -77,8 +77,8 @@ const Navbar = () => {
                     ? "text-primary"
                     : "text-foreground/80 hover:text-primary"
                 }`}
-              >
-                {link.name}
+               >
+                <link.icon className="h-5 w-5" />
                 {isActive(link.path) && (
                   <span className="absolute bottom-0 left-0 h-0.5 bg-primary w-full" />
                 )}
