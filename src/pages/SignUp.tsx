@@ -38,8 +38,8 @@ const SignUp = () => {
     
     setIsLoading(true);
     try {
-      await signUp(email, password, name);
-      navigate("/");
+      await signUp(email, password);
+      // Don't navigate immediately - user needs to verify email
     } catch (error) {
       console.error("Sign up error:", error);
     } finally {

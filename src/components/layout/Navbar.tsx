@@ -93,7 +93,7 @@ const Navbar = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="flex items-center gap-2">
                     <UserRound className="h-4 w-4" />
-                    <span>{user.name || user.email.split('@')[0]}</span>
+                    <span>{user.email.split('@')[0]}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -118,12 +118,6 @@ const Navbar = () => {
                 </Link>
                 <Link to="/signup">
                   <Button size="sm">Sign up</Button>
-                </Link>
-                <Link to="/signin" className="ml-2">
-                  <Button variant="default" size="sm" className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white">
-                    <LogIn className="h-4 w-4" />
-                    Log in
-                  </Button>
                 </Link>
               </>
             )}
